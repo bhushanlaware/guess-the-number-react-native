@@ -1,21 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { BottomNavigation, DarkTheme, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import TopAppbar from './src/components/Layouts/TopAppbar';
+import AboutScreen from './src/Screens/AboutScreen';
+import HomeScreen from './src/Screens/HomeScreen';
+import BluePink from './src/themes/OrangePurple';
 
+
+const Darktheme = {
+  ...DarkTheme,
+  roundness: 2,
+  mode: 'exact',
+  colors: {
+    ...DarkTheme.colors,
+    ...BluePink
+  },
+};
+const Lighttheme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    ...BluePink
+  },
+};
+const routes = [
+  { key: 'home', title: 'Play', icon: 'play' },
+  { key: 'about', title: 'About', icon: 'information-outline' },
+];
+
+
+
+const renderScene = BottomNavigation.SceneMap({
+  home: HomeScreen,
+  about: AboutScreen,
+});
 export default function App() {
+  const [index, setIndex] = React.useState(0);
+  const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+  // console.log(colors)
+  const toggleTheme = () => {
+    setIsDarkTheme(!isDarkTheme);
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider theme={isDarkTheme ? Darktheme : Lighttheme}>
+      <TopAppbar title='Guess the Number (1-100) 🧐' toggleTheme={toggleTheme}></TopAppbar>
+      <BottomNavigation
+        navigationState={{ index, routes }}
+        onIndexChange={setIndex}
+        renderScene={renderScene}></BottomNavigation>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

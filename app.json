@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-demo",
-    "slug": "expo-demo",
+    "name": "Guess the number",
+    "slug": "guess-the-number",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
